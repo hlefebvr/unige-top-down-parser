@@ -10,6 +10,10 @@ SyntacticAnalyser::SyntacticAnalyser(const SyntacticAnalyser& orig)
 
 SyntacticAnalyser::~SyntacticAnalyser() {}
 
+bool SyntacticAnalyser::is_char(char current) {
+    return is_letter(current) || current == '(' || current == ')';
+}
+
 bool SyntacticAnalyser::is_letter(char current) {
     return (current >= 'a' && current <= 'z') || (current >= 'A' && current <= 'Z') || current == '.' || current == ',' || current == ';' || is_space(current) || (current >= '0' && current <= '9');
 }
@@ -33,42 +37,42 @@ Token SyntacticAnalyser::automaton(int state) {
     
     if (state == 1) {
         if (current == 'e') return automaton(2);
-        if (is_letter(current)) return retract_return(1);
+        if (is_char(current)) return retract_return(1);
     }
     
     if (state == 2) {
         if (current == 'g') return automaton(3);
-        if (is_letter(current)) return retract_return(2);
+        if (is_char(current)) return retract_return(2);
     }
     
     if (state == 3) {
         if (current == 'i') return automaton(4);
-        if (is_letter(current)) return retract_return(3);
+        if (is_char(current)) return retract_return(3);
     }
     
     if (state == 4) {
         if (current == 'n') return automaton(5);
-        if (is_letter(current)) return retract_return(4);
+        if (is_char(current)) return retract_return(4);
     }
     
     if (state == 5) {
         if (is_space(current)) return Token(Token::TYPE::KEYWORD, Token::KEYWORD::BEGIN);
-        if (is_letter(current)) return retract_return(5);
+        if (is_char(current)) return retract_return(5);
     }
     
     if (state == 7) {
         if (current == 'n') return automaton(8);
-        if (is_letter(current)) return retract_return(1);
+        if (is_char(current)) return retract_return(1);
     }
     
     if (state == 8) {
         if (current == 'd') return automaton(9);
-        if (is_letter(current)) return retract_return(2);
+        if (is_char(current)) return retract_return(2);
     }
     
     if (state == 9) {
-        if (is_space(current)) return Token(Token::TYPE::KEYWORD, Token::KEYWORD::END);
-        if (is_letter(current)) return retract_return(3);
+        if (is_space(current) || buffer.out()) return Token(Token::TYPE::KEYWORD, Token::KEYWORD::END);
+        if (is_char(current)) return retract_return(3);
     }
     
     string error = "Unrecognized character : ' '.";

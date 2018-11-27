@@ -24,6 +24,10 @@ public:
     
     void print();
     
+    bool out() const {
+        return (ptr_end >= BUFFER_SIZE + size_right || ptr_end <= size_left);
+    }
+    
 private:
     ifstream f;
     char *buffer;

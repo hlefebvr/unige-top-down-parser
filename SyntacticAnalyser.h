@@ -21,6 +21,7 @@ private:
     
     bool is_letter(char current);
     bool is_space(char current);
+    bool is_char(char current);
     Token automaton(int state = 0);
     Token retract_return(int n_retract);
 };
