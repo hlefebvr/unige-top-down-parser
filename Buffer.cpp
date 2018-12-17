@@ -80,7 +80,7 @@ void Buffer::load_buffer_right() {
 char Buffer::retract(int n) {
     ptr_end -= n;
     
-    if (ptr_end < ptr_begin) throw std::invalid_argument("Cannot retract beyond");
+    // if (ptr_end <= ptr_begin) throw std::invalid_argument("Cannot retract beyond");
 
     return current();
 }

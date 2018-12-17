@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Buffer.o \
+	${OBJECTDIR}/Interpreter.o \
 	${OBJECTDIR}/ParsingTable.o \
 	${OBJECTDIR}/SyntacticAnalyser.o \
 	${OBJECTDIR}/Token.o \
@@ -70,6 +71,11 @@ ${OBJECTDIR}/Buffer.o: Buffer.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Buffer.o Buffer.cpp
+
+${OBJECTDIR}/Interpreter.o: Interpreter.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Interpreter.o Interpreter.cpp
 
 ${OBJECTDIR}/ParsingTable.o: ParsingTable.cpp
 	${MKDIR} -p ${OBJECTDIR}

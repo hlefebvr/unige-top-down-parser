@@ -6,6 +6,7 @@
 #include "Buffer.h"
 #include "SyntacticAnalyser.h"
 #include "ParsingTable.h"
+#include "Interpreter.h"
 
 using namespace std;
 
@@ -49,7 +50,10 @@ int main(int argc, char** argv) {
     // string input_file = "./input_example";
     string input_file = "./false_example";
     
+    string output_file = "./output";
+    
     auto analyzer = SyntacticAnalyser(input_file);
+    auto interpreter = Interpreter(output_file);
     
     // initialize table
     auto M = ParsingTable();
@@ -69,12 +73,12 @@ int main(int argc, char** argv) {
         Token X = stack.top();
         stack.pop();
         
-        cout << "Trying to reduce " << to_words(X) << endl;
-        cout << "with... " << to_words(a) << endl;
+        cout << "Trying to reduce " << to_words(X) << " with [" << to_words(a) << "]" << endl;
 
         if ( a == X ) {
             
             print(a);
+            interpreter.action(a);
             
             a = analyzer.get_next_token(); // read next input token
             continue;
@@ -87,6 +91,7 @@ int main(int argc, char** argv) {
         vector<Token> rule = M(X, a);
         for (auto it = rule.rbegin() ; it != rule.rend() ; it++) stack.push(*it);
         
+        cout.flush();
     }
     
     if (stack.top().get_type() != Token::TYPE::END_OF_FILE)
@@ -96,5 +101,3 @@ int main(int argc, char** argv) {
     
     return 0;
 }
-
-// recognizing "end" : space or eof
